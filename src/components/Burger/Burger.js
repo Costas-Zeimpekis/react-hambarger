@@ -4,18 +4,19 @@ import PropTypes from 'prop-types';
 import './Burger.scss';
 import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
 
-const burger = (props) => {
+const burger = props => {
   let ingredientsTransformed = Object.keys(props.ingredients).map(igKey => {
-    return [...Array(props.ingredients[igKey])].map((_, i) => {
-      return <BurgerIngredient key={igKey + i} type={igKey} />
-    })
+    return [...Array(props.ingredients[igKey])]
+      .map((_, i) => {
+        return <BurgerIngredient key={igKey + i} type={igKey} />;
+      })
       .reduce((arr, el) => {
         return arr.concat(el);
-      }, [])
+      }, []);
   });
 
   if (ingredientsTransformed === 0) {
-    ingredientsTransformed = <p>Please Start adding Ingredients</p>
+    ingredientsTransformed = <p>Please Start adding Ingredients</p>;
   }
   console.log(ingredientsTransformed);
 
@@ -26,9 +27,9 @@ const burger = (props) => {
       <BurgerIngredient type="bread-bottom" />
     </div>
   );
-}
+};
 
 burger.propTypes = {
   ingredients: PropTypes.object
-}
+};
 export default burger;
