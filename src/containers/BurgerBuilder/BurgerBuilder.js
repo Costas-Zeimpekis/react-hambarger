@@ -4,7 +4,6 @@ import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrdreSummary/OrderSummary';
-import Backdrop from '../../components/UI/Backdrop/Backdrop';
 
 const INGREDIENT_PRICES = {
   salad: 0.5,
@@ -86,10 +85,19 @@ class BurgerBuilder extends Component {
   };
 
   purchaseHandler = () => {
-    const purchasing = this.state.purchasing;
     this.setState({
-      purchasing: !purchasing
+      purchasing: true
     });
+  };
+
+  purchaseCancelHandler = () => {
+    this.setState({
+      purchasing: false
+    });
+  };
+
+  purchaseContinueHandler = () => {
+    alert('You Continue');
   };
 
   render() {
@@ -102,10 +110,18 @@ class BurgerBuilder extends Component {
 
     return (
       <Fragment>
-        <Modal show={this.state.purchasing}>
-          <OrderSummary ingredients={this.state.ingredients} />
+        <Modal
+          show={this.state.purchasing}
+          onClickCancelPurchase={this.purchaseCancelHandler}
+          onClickPurchase={this.purchaseHandler}
+        >
+          <OrderSummary
+            price={this.state.totalPrice}
+            ingredients={this.state.ingredients}
+            onClickCancelPurchase={this.purchaseCancelHandler}
+            onClickPurchase={this.purchaseContinueHandler}
+          />
         </Modal>
-        <Backdrop show={this.state.purchasing} clicked={this.purchaseHandler} />
         <Burger ingredients={this.state.ingredients} />
         <BuildControls
           ingredientAdded={this.addIngredinetHandler}
